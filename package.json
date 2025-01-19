@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15"
+  },
+  "scripts": {
+    "dev": "npx tailwindcss -i ./admin/portal/src/styles/main.css -o ./admin/portal/src/styles/output.css --watch"
+  },
+  "dependencies": {
+    "axios": "^1.7.8",
+    "sweetalert2": "^11.14.5"
+  }
+}

@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: body-font;
+  src: url(SEGOEUI.TTF);
+}
+@font-face {
+  font-family:title-font;
+  src: url(berlin-regular.TTF);
+}
+
+:root {
+    --primary-color: #002B00  ;
+    --secondary-color: #031C13;
+ 
+  }
+
+  button{
+    @apply bg-primary-color hover:bg-[#444444] text-white py-[15px] rounded-[5px];
+}
+  
+  .bg-portal-bg {
+    background: linear-gradient(45deg, var(--secondary-color) 70%, var(--primary-color) 30%);
+  }
+
+  .header-links{
+    @apply py-[10px] px-[25px] bg-opacity-30 hover:bg-white hover:bg-opacity-30 rounded-[5px] cursor-pointer font-body;
+}
+
+.side-links{
+  @apply pt-[12px] px-[10px] pb-[18px] border-b-[#DBEBBE] border-b-[1px] text-[13px] cursor-pointer hover:bg-[#F4F5F7] font-body;
+}
+
+.li-in{
+  @apply p-[10px] text-[13px] cursor-pointer hover:bg-[#cfd6e0];
+}
+
+.count-div{
+  @apply w-[20%] h-[210px] bg-primary-color rounded-md flex-grow flex justify-between items-center;
+}
+
+.formHeader{
+  @apply bg-portal-bg h-[55px] flex justify-between items-center px-[10px];
+}
+
+.formInput{
+  @apply w-[100%] my-[8px] py-[15px] px-[20px] bg-white outline-none focus:border-primary-color focus:border-[1px] border-[1px] rounded-[5px];
+}
+
+th{
+  @apply p-[12px] text-left text-[10px] font-bold text-white bg-primary-color;
+}
+
+td{
+  @apply p-[10px] text-[10px] text-[#333];
+}
+
+table tbody tr:nth-child(even){
+  background-color: #E1DDDA;
+}

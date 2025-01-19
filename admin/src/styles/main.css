@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+    --primary-color:#002B00;
+    --secondary-color:#ffaa6a;
+}
+
+h2{
+    @apply mt-[10px] text-[22px] font-bold text-white;
+}
+
+hr{
+    @apply w-[40%] mt-[10px] border border-primary-color;
+}
+
+label{
+    @apply px-[10px] text-white;
+}
+
+.flex-container{
+    @apply mt-[20px] text-[12px] flex flex-col gap-[10px];
+}
+
+input{
+    @apply w-[100%] my-[10px] py-[15px] px-[20px] bg-white focus:outline-none border-primary-color border-[1px] rounded-[5px];
+}
+
+button{
+    @apply w-[40%] bg-primary-color hover:bg-[#444444] text-white py-[15px] rounded-[5px];
+}
+
+.password-div{
+    @apply bg-[#7C4D3D] bg-opacity-50 text-white font-bold border-primary-color border-[1px] py-[10px] px-[15px] rounded;
+}
+
+span{
+    @apply text-[#DCB2B5] cursor-pointer;
+}
+
+.links{
+    @apply flex items-center gap-1 text-[#F00] hover:text-primary-color;
+}
+
+.headerLink{
+    @apply py-[10px] px-[15px] bg-black bg-opacity-50 text-white rounded-[5px];
+}
