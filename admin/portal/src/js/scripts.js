@@ -1293,5 +1293,78 @@ function updateSystem(){
   }
 }
 
+function fetchExpenses(page, expenses_id) {
+  $('#fetch_all_expenses').html('<div class="ajax-loader"><br><img src="src/all-images/image-pix/ajax-loader.gif"/></div>').fadeIn(500);
+  var search_txt = $('#search').val();
+
+  var formData = 'expenses_id=' + expenses_id + '&search_txt=' + search_txt;
+
+  axios.post(endpoint + '/admin/fetch-all-expenses-api?access_key=' + access_key + '&page=' + page, formData, { headers: apikey })
+      .then(response => {
+          var access_check = response.data.check;
+          var success = response.data.success;
+          var message = response.data.message;
+          var fetch = response.data.data;
+          var pagination = response.data.pagination;
+
+          if (access_check == 0) {
+              _logout_();
+          } else {
+              var text = '';
+
+              if (success == true) {
+                  if (fetch.length > 0) {
+                      text = '<table class="w-[100%] border-collapse"><thead><tr><th>SN</th><th>EXPENSES DESCRIPTION</th><th>EXPENSES ITEM</th><th>EXPENSES AMOUNT</th><th>BALANCE BEFORE</th><th>BALANCE AFTER</th><th>DATE</th><th>ACTION</th></tr></thead><tbody class="bg-white">';
+                      for (var i = 0; i < fetch.length; i++) {
+                          var expenses_id = fetch[i].expenses_id;
+                          var expenses_decription = fetch[i].expenses_decription.toUpperCase();
+                          var expenses_items = fetch[i].expenses_items.toUpperCase();
+                          var expenses_amount = fetch[i].expenses_amount;
+                          var balance_before = fetch[i].balance_before;
+                          var balance_after = fetch[i].balance_after;
+                          var date = fetch[i].created_Time;
+
+                          text +=
+                          '<tr>'+
+                              '<td>' + (i + 1) + '</td>'+
+                              '<td>' + expenses_decription + '</td>'+
+                              '<td>' + expenses_items + '</td>'+
+                              '<td>' + expenses_amount + '</td>'+
+                              '<td>' + balance_before + '</td>'+
+                              '<td>' + balance_after + '</td>'+
+                              '<td>' + date + '</td>'+
+                              '<td><i onclick="_get_form_with_id(' + "'update-expenses'" + "," + "'" + expenses_id + "'" + ')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW"></i></td>'+
+                          '</tr>';
+                      }
+                      text += '</tbody></table>'+
+
+                      '<div class="my-[10px] flex justify-between">'+
+                          '<div class="text-[#3a4669]">Showing ' + pagination.current_page + ' to ' + pagination.total_pages + ' of ' + pagination.total_expenses + ' entries</div>'+
+                          '<div class="flex gap-1">'+
+                              '<button class="text-sm py-[8px] px-[15px]" ' +(pagination.prev_page ? 'onclick="fetchExpenses(' + pagination.prev_page + ', \'\')"' : 'disabled') +'>PREVIOUS</button>' +
+                              '<button class="text-sm py-[8px] px-[15px]" ' +(pagination.next_page ? 'onclick="fetchExpenses(' + pagination.next_page + ', \'\')"' : 'disabled') +'>NEXT</button>';
+                          '</div>'+
+                      '</div>';
+
+                  } 
+
+                  $('#fetch_all_expenses').html(text);
+              } else {
+                text = '<table class="w-[100%] border-collapse"><thead><tr><th>SN</th><th>EXPENSES DESCRIPTION</th><th>EXPENSES ITEM</th><th>EXPENSES AMOUNT</th><th>BALANCE BEFORE</th><th>BALANCE AFTER</th><th>DATE</th><th>ACTION</th></tr></thead>' +
+                '<tbody class="bg-white">' + 
+                '</tbody></table>' + 
+                '<div class="bg-[#FAF3F0] text-[#3a4669] border-[#F2BDA2] border-[1px] w-[100%] mx-auto mt-[5px] flex gap-1 p-[10px] pl-[30px] text-[12px]">' +
+                '<i class="bi bi-bell"></i><p>' + message + '</p>' +
+                '</div>';
+                  $('#fetch_all_expenses').html(text);
+              }
+          }
+      })
+      .catch(error => {
+          console.error('Error fetching expenses:', error);
+          $('#fetch_all_expenses').html('<p>There was an error fetching the expenses. Please try again later.</p>');
+      });
+}
+
 
 

@@ -422,7 +422,7 @@
 <?php if($page=='expenses-module'){?>
    <div class="w-[100%] h-[55px] text-white bg-[#EBEBEB] rounded-md font-body">
         <div class="w-[95%] mx-[auto]">
-            <input class="w-[100%] h-[40px] mt-[7.5px] outline-none px-[10px] text-black/50 rounded-md focus:border border-black/30" type="text" id="search"/>
+            <input class="w-[100%] h-[40px] mt-[7.5px] outline-none px-[10px] text-black/50 rounded-md focus:border border-black/30" type="text" id="search" onkeyup="fetchExpenses(1, '')"/>
         </div>
 
         <div class="w-[100%] h-[40px] bg-[#ECF5F0] mt-[7px] border-solid border border-[#A0E5BD] flex justify-center">
@@ -432,42 +432,8 @@
             </div>
         </div>
 
-        <div class="w-[98%] m-auto mt-[10px]" id="fetch_all_student">
-            <!-- <script>_all_student(1);</script> -->
-            <table class="w-[100%] border-collapse">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>EXPENSES DESCRIPTION</th>
-                        <th>EXPENSES ITEM</th>
-                        <th>EXPENSES AMOUNT</th>
-                        <th>BALANCE BEFORE</th>
-                        <th>BALANCE AFTER</th>
-                        <th>DATE</th>
-                        <th>ACTION</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    <tr>
-                        <td>1</td>
-                        <td>CLN202406051207410022345645672</td>
-                        <td>FORTUNE TECH GLOBAL</td>
-                        <td>PAID</td>
-                        <td>UNPAID</td>
-                        <td>UNPAID</td>
-                        <td>UNPAID</td>
-                        <td><i onclick="_get_form('update-expenses')" class="bi bi-pencil-square text-[15px] text-white p-[8px] bg-primary-color cursor-pointer hover:bg-[#444444]" title="VIEW PROFILE"></i></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="my-[10px] flex justify-between">
-                <div class="text-[#3a4669]">showing 1 to 5 of 31 entries</div>
-                <div class="flex gap-1">
-                    <button class="text-sm py-[8px] px-[15px]">PREVIOUS</button>
-                    <button class="text-sm py-[8px] px-[15px]">NEXT</button>
-                </div>
-            </div>
+        <div class="w-[98%] m-auto mt-[10px]" id="fetch_all_expenses">
+            <script>fetchExpenses(1, '');</script>
         </div>
    </div>  
 <?php }?>
