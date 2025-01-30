@@ -31,19 +31,23 @@
 			</div>
 		</div>
 
-		<div class="w-[40%] min-h-[530px] bg-black/80 rounded-tr-lg rounded-br-lg h-custom-screen-ml:rounded-none h-custom-screen-ml:w-[100%] animated fadeInLeft">
-			<div class="w-[80%] m-auto mt-[25px] h-custom-screen-ml:pt-[70px]">
-				<div class="w-[60px] p-[5px] bg-white rounded-[50%]"><img src="./src/all-images/image-pix/icon.png" alt="<?php echo $website_name;?> Logo" title="<?php echo $website_name;?> Logo" /></div>
+		<div class="w-[40%] min-h-[530px] bg-black/80 rounded-tr-lg rounded-br-lg h-custom-screen-ml:rounded-none h-custom-screen-ml:w-[100%] flex flex-col animated fadeInLeft">
+			<div class="w-[80%] m-auto mt-[25px] h-custom-screen-ml:pt-[70px] flex-grow">
+				<div class="w-[60px] p-[5px] bg-white rounded-[50%]">
+					<img src="./src/all-images/image-pix/icon.png" alt="<?php echo $website_name;?> Logo" title="<?php echo $website_name;?> Logo" />
+				</div>
 				<div class="info" id="more-info">
 					<?php $page='log-in';?>
-					<?php include 'config/content-page.php';?> 
+					<?php include 'config/content-page.php';?> 
 				</div>
 			</div>
 
-			<footer class="fixed bottom-[0%] w-[100%] h-[70px] bg-[#303134] text-center pt-[10px] text-white text-[14px] round">
-				&copy; Copy Right Reserved 2024 - <?php echo date("Y");?><br/> <span class="text-[#DCB2B5]">Developed By: NACOS Software Director 1 & 2</span>
+			<footer class="w-full h-[70px] bg-[#303134] text-center pt-[10px] text-white text-[14px] rounded-b-lg">
+				&copy; Copy Right Reserved 2024 - <?php echo date("Y");?><br/> 
+				<span class="text-[#DCB2B5]">Developed By: NACOS Software Director 1 & 2</span>
 			</footer>
 		</div>
+
 	</div>
 
 </body>

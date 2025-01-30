@@ -742,18 +742,26 @@ function all_counts(){
             _logout_(); 
         } else {
             if (success == true) {
-                var count = response.data.data;
+                var count = response.data.data[0];
                 var staff_count = count.staff_count;
                 var student_count = count.student_count;
-                var faculty_count = count.faculty_count;
-                var department_count = count.department_count;
-                var course_count = count.course_count;
+                var expected_dept_fee =  count.expected_departmental_fee;
+                var available_departmental_balance = count.available_departmental_balance;
+                var expected_nacos_fee = count.expected_nacos_fee;
+                var available_nacos_balance = count.available_nacos_balance;
+                var total_balance =  count.total_balance;
+                var total_amount_spent = count.total_amount_spent;
+                var alert = (count.alert_count>=9) ? '9+' : count.alert_count;
 
                 $('#total_staff').html(staff_count);
                 $('#total_student').html(student_count);
-                $('#total_faculty').html(faculty_count);
-                $('#total_department').html(department_count);
-                $('#total_course').html(course_count);
+                $('#expected_dept_fee').html(expected_dept_fee);
+                $('#department_balance').html(available_departmental_balance);
+                $('#expected_nacos_balance').html(expected_nacos_fee);
+                $('#nacos_balance').html(available_nacos_balance);
+                $('#total_balance').html(total_balance);
+                $('#total_spent').html(total_amount_spent);
+                $('#alert').html(alert);
             }
         }
     })
@@ -1293,11 +1301,11 @@ function updateSystem(){
   }
 }
 
-function fetchExpenses(page, expenses_id) {
+function fetchExpenses(page) {
   $('#fetch_all_expenses').html('<div class="ajax-loader"><br><img src="src/all-images/image-pix/ajax-loader.gif"/></div>').fadeIn(500);
   var search_txt = $('#search').val();
 
-  var formData = 'expenses_id=' + expenses_id + '&search_txt=' + search_txt;
+  var formData = 'search_txt=' + search_txt;
 
   axios.post(endpoint + '/admin/fetch-all-expenses-api?access_key=' + access_key + '&page=' + page, formData, { headers: apikey })
       .then(response => {
@@ -1319,9 +1327,9 @@ function fetchExpenses(page, expenses_id) {
                           var expenses_id = fetch[i].expenses_id;
                           var expenses_decription = fetch[i].expenses_decription.toUpperCase();
                           var expenses_items = fetch[i].expenses_items.toUpperCase();
-                          var expenses_amount = fetch[i].expenses_amount;
-                          var balance_before = fetch[i].balance_before;
-                          var balance_after = fetch[i].balance_after;
+                          var expenses_amount = fetch[i].formatted_expenses_amount;
+                          var balance_before = fetch[i].formatted_balance_before;
+                          var balance_after = fetch[i].formatted_balance_after;
                           var date = fetch[i].created_Time;
 
                           text +=
@@ -1364,6 +1372,224 @@ function fetchExpenses(page, expenses_id) {
           console.error('Error fetching expenses:', error);
           $('#fetch_all_expenses').html('<p>There was an error fetching the expenses. Please try again later.</p>');
       });
+}
+
+function _add_new_expenses(){
+  var expenses_desc = $('#expenses_desc').val();
+  var expenses_item = $('#expenses_item').val();
+  var expenses_amount = $('#expenses_amount').val();
+
+  if (expenses_desc==''){
+      showError('EXPENSES ERROR!', 'Fill all Fields To Continue');
+  }else if (expenses_item==''){
+    showError('EXPENSES ITEM ERROR!', 'Fill all Fields To Continue');
+  }else if (expenses_amount==''){
+    showError('EXPENSES AMOUNT ERROR!', 'Fill all Fields To Continue');
+  }else{
+
+      var btn_text  = $('#submit_btn').html();
+      $('#submit_btn').html('<i id="spinner" class="bi bi-arrow-repeat"></i> SUBMITTING...');
+      document.getElementById('submit_btn').disabled = true;
+
+      var formData = 'expenses_description=' + expenses_desc + '&expenses_item=' + expenses_item + '&expenses_amount=' + expenses_amount;
+
+      axios.post(endpoint+'/admin/add-new-expenses-api?access_key='+access_key, formData, { headers: apikey })
+      .then(response => {
+          var access_check = response.data.check;
+          var success = response.data.success;
+          var message = response.data.message;
+  
+          if (access_check == 0) {
+              _logout_(); 
+          } else {
+              if (success == true) {
+                  $('#success-div').html('<div><i class="bi-check-all"></i></div>SUCCESS!' + ' ' + message).fadeIn(500).delay(5000).fadeOut(100);
+                  $('#submit_btn').html(btn_text);
+                  document.getElementById('submit_btn').disabled=false;
+                  alert_close();
+                  fetchExpenses(1, '');
+              }else{
+                  $('#warning-div').html('<div><i class="bi-check-all"></i></div>ERROR!' + ' ' + message).fadeIn(500).delay(5000).fadeOut(100);
+                  $('#submit_btn').html(btn_text);
+                  document.getElementById('submit_btn').disabled=false;
+              }
+          }
+      })
+      .catch(error => {
+          $('#warning-div').html('<div><i class="bi-check-all"></i></div>ERROR!' + ' ' + error).fadeIn(500).delay(5000).fadeOut(100);
+          $('#submit_btn').html(btn_text);
+          document.getElementById('submit_btn').disabled = false;
+      });
+  }
+}
+
+function fetchEachExpenses(expenses_id){
+
+  var formData = 'expenses_id=' + expenses_id;
+
+  axios.post(endpoint+'/admin/fetch-all-expenses-api?access_key='+access_key, formData, { headers: apikey })
+    .then(response => {
+      var access_check = response.data.check;
+      var success = response.data.success;
+
+      if (access_check==0){
+        _logout_();
+      }else{
+
+        if (success==true){
+          var expenses_data = response.data.data[0];
+          var expenses_decription = expenses_data.expenses_decription;
+          var expenses_item = expenses_data.expenses_items;
+          var expenses_amount = expenses_data.formatted_expenses_amount;
+        
+          $("#expenses_description").val(expenses_decription);
+          $("#expenses_item").val(expenses_item);
+          $("#expenses_amount").val(expenses_amount);
+
+        }
+      }
+    });
+}
+
+function updateExpenses(expenses_id){
+  var expenses_description = $('#expenses_description').val();
+  var expenses_item = $('#expenses_item').val();
+  var expenses_amount = $('#expenses_amount').val();
+
+  if (expenses_description==''){
+      showError('EXPENSES DESCRIPTION ERROR!', 'Fill all Fields To Continue');  
+  }else if (expenses_item==''){
+    showError('EXPENSES ITEM ERROR!', 'Fill all Fields To Continue');
+  }else if (expenses_amount==''){
+    showError('EXPENSES AMOUNT ERROR!', 'Fill all Fields To Continue');
+  }else{
+      var btn_text  = $('#submit_btn').html();
+      $('#submit_btn').html('<i id="spinner" class="bi bi-arrow-repeat"></i> SUBMITTING...');
+      document.getElementById('submit_btn').disabled = true;
+
+      var formData = 'expenses_description=' + expenses_description + '&expenses_item=' + expenses_item + '&expenses_amount=' + expenses_amount + '&expenses_id=' + expenses_id;
+      axios.post(endpoint+'/admin/update-expenses-api?access_key='+access_key, formData, { headers: apikey })
+
+      .then(response => {
+          var access_check = response.data.check;
+          var success = response.data.success;
+          var message = response.data.message;
+  
+          if (access_check == 0) {
+              _logout_();
+          } else {
+              if (success == true) {
+                  $('#success-div').html('<div><i class="bi-check-all"></i></div>SUCCESS!' + ' ' + message).fadeIn(500).delay(5000).fadeOut(100);
+                  $('#submit_btn').html(btn_text);
+                  document.getElementById('submit_btn').disabled=false;
+                  fetchExpenses(1);
+                  alert_close();
+              }else{
+                  $('#warning-div').html('<div><i class="bi-check-all"></i></div>ERROR!' + ' ' + message).fadeIn(500).delay(5000).fadeOut(100);
+                  $('#submit_btn').html(btn_text);
+                  document.getElementById('submit_btn').disabled=false;
+              }
+          }
+      })
+      .catch(error => {
+          $('#warning-div').html('<div><i class="bi-check-all"></i></div>ERROR!' + ' ' + error).fadeIn(500).delay(5000).fadeOut(100);
+          $('#submit_btn').html(btn_text);
+          document.getElementById('submit_btn').disabled = false;
+      });
+  }
+}
+
+function _all_notification(start_date, end_date) {
+  var search = $('#search').val()
+
+  $('#fetch_all_notification').html('<div class="ajax-loader"><br><img src="src/all-images/image-pix/ajax-loader.gif"/></div>').fadeIn(500);
+  var formData = 'start_date=' + start_date + '&end_date=' + end_date + '&search_txt=' + search;
+
+  axios.post(endpoint+'/admin/fetch-notification-api?access_key='+access_key, formData, { headers: apikey })
+  .then(response => {
+    var access_check = response.data.check;
+    var success = response.data.success;
+    var message = response.data.message;
+    var fetch = response.data.data;
+
+    if (access_check==0){
+      _logout_();
+    }else{
+      var text = '';
+
+      if (success==true){
+
+          for (var i = 0; i < fetch.length; i++) {
+              var alert_id = fetch[i].alert_id;
+              var fullname = fetch[i].fullname.toUpperCase();
+              var short_alert_description = fetch[i].short_alert_description;
+              var created_time = fetch[i].created_time;
+    
+              text +=
+    
+              '<div class="w-[30%] h-[110px] bg-white flex rounded-[5px] border-table-box-border border-[1px] cursor-pointer transition-all duration-700 hover:scale-105" onClick="_get_form_with_id(' + "'notification-module'" + "," + "'" + alert_id+ "'" + ')">'+
+                '<div class="w-[90%] mx-auto mt-[10px] text-[#333]">'+
+                    '<div class="w-[100%] flex justify-between">'+
+                        '<div><i class="bi bi-person-circle"></i> <span>'+ fullname +'</span></div>'+
+                        '<div><i class="bi bi-check2-all text-[15px]"></i></div>'+
+                    '</div>'+
+
+                    '<div class="mt-[8px] text-[12px] text-[#A2A2A2]">'+ short_alert_description+'...' +'</div>'+
+                    '<div class="mt-[8px] flex justify-end gap-1 text-[10px] text-[#EDA564]"><i class="bi bi-alarm"></i> '+ created_time +'</div>'+
+                '</div>'+
+            '</div>';
+    
+          }
+
+          $('#fetch_all_notification').html(text);
+      }else{
+          text +=
+        '<div class="false-notification-div">' +
+        "<p> " + message + " </p>" + '</div>';
+      $('#fetch_all_notification').html(text);
+      }
+    }
+  })
+  .catch(error => {
+      var errorMessage = '<div class="false-notification-div"><p>' + error + '</p></div>';
+      $('#fetch_all_notification').html(errorMessage);
+  });
+}
+
+function _get_each_notification(alert_id){
+
+	var formData = 'alert_id=' + alert_id;
+  
+	axios.post(endpoint+'/admin/fetch-notification-api?access_key='+access_key, formData, { headers: apikey })
+	  .then(response => {
+		var access_check = response.data.check;
+		var success = response.data.success;
+  
+		if (access_check==0){
+		  _logout_();
+		}else{
+  
+		  if (success==true){
+        var alert_data = response.data.data;
+        var user_id = alert_data.staff_id;
+        var fullname = alert_data.fullname;
+        var ip_address = alert_data.ip_address;
+        var system_used = alert_data.system_used;
+        var alert_id = alert_data.alert_id;
+        var date = alert_data.created_time;
+        var alert_description = alert_data.alert_description;
+    
+        $("#user_id").html(user_id);
+        $("#fullname").html(fullname);
+        $("#ip_address").html(ip_address);
+        $("#system_used").html(system_used);
+        $("#alert_id").html(alert_id);
+        $("#date").html(date);
+        $("#alert_description").html(alert_description);
+        $("#system_used").html(system_used);
+		  }
+		}
+	});
 }
 
 

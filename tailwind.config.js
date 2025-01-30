@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./admin/**/*.{php,js}"],
+  content: ["./admin/**/*.{php,js}", "./student/**/*.{php,js}"],
   theme: {
     extend: {
       colors:{
@@ -13,6 +13,7 @@ module.exports = {
       },
       backgroundImage: {
         'profile-background': 'linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(../../src/all-images/background-pix/profile-bg.jpg)',
+        'background': 'linear-gradient(rgba(0,0,0,0.1),rgba(0,0,0,0.1)),url(../../all-images/body-pix/cover-pix.jpg);',
       },
       screens: {
         'h-custom-screen-m': {'max': '850px'},

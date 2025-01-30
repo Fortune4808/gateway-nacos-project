@@ -521,20 +521,20 @@
                 <div class="my-[20px] text-[12px] flex flex-col gap-[5px]">
                     <div class="w-[100%]">
                         <label class="px-[10px] text-primary-color"> EXPENSES DESCRIPTION:</label><br/>
-                        <input class="formInput" type="text" id="fullname" placeholder="ENTER EXPENSES DESCRIPTION"/>
+                        <input class="formInput" type="text" id="expenses_desc" placeholder="ENTER EXPENSES DESCRIPTION"/>
                     </div>
             
                     <div class="w-[100%]">
                         <label class="px-[10px] text-primary-color"> EXPENSES ITEM:</label><br/>
-                        <input class="formInput" type="tel" id="phoneno" placeholder="ENTER EXPENSES ITEM"/>
+                        <input class="formInput" type="tel" id="expenses_item" placeholder="ENTER EXPENSES ITEM"/>
                     </div>
 
                     <div class="w-[100%]">
                         <label class="px-[10px] text-primary-color"> EXPENSES AMOUNT:</label><br/>
-                        <input class="formInput" type="email" id="email" placeholder="ENTER EXPENSES AMOUNT"/>
+                        <input class="formInput" type="email" id="expenses_amount" placeholder="ENTER EXPENSES AMOUNT"/>
                     </div>
 
-                    <button class="w-[40%]" title="submit" id="submit_btn" onclick=""><i class="bi-check2"></i> SUBMIT</button>
+                    <button class="w-[40%]" title="submit" id="submit_btn" onclick="_add_new_expenses();"><i class="bi-check2"></i> SUBMIT</button>
                 </div>
             </div>
         </div>
@@ -555,23 +555,24 @@
                 <div class="my-[20px] text-[12px] flex flex-col gap-[5px]">
                     <div class="w-[100%]">
                         <label class="px-[10px] text-primary-color"> EXPENSES DESCRIPTION:</label><br/>
-                        <input class="formInput" type="text" id="fullname" placeholder="ENTER EXPENSES DESCRIPTION"/>
+                        <input class="formInput" type="text" id="expenses_description" placeholder="ENTER EXPENSES DESCRIPTION"/>
                     </div>
             
                     <div class="w-[100%]">
                         <label class="px-[10px] text-primary-color"> EXPENSES ITEM:</label><br/>
-                        <input class="formInput" type="tel" id="phoneno" placeholder="ENTER EXPENSES ITEM"/>
+                        <input class="formInput" type="tel" id="expenses_item" placeholder="ENTER EXPENSES ITEM"/>
                     </div>
 
                     <div class="w-[100%]">
                         <label class="px-[10px] text-primary-color"> EXPENSES AMOUNT:</label><br/>
-                        <input class="formInput" type="email" id="email" placeholder="ENTER EXPENSES AMOUNT"/>
+                        <input class="formInput" type="email" id="expenses_amount" placeholder="ENTER EXPENSES AMOUNT"/>
                     </div>
 
-                    <button class="w-[40%]" title="submit" id="submit_btn" onclick=""><i class="bi-check2"></i> UPDATE</button>
+                    <button class="w-[40%]" title="submit" id="submit_btn" onclick="updateExpenses('<?php echo $ids?>');"><i class="bi-check2"></i> UPDATE</button>
                 </div>
             </div>
         </div>
+        <script>fetchEachExpenses('<?php echo $ids; ?>')</script>
     </div>
 <?php }?>
 
@@ -778,24 +779,23 @@
 
             <div class="w-[90%] m-auto">
                 <div class="my-[20px] text-base text-[#B2B7B6] font-bold font-body flex flex-col gap-[5px] w-[100%] bg-[#FAF3F0] border-[#F2BDA2] border-[1px] py-[10px] px-[15px]">
-                    <div>User ID: <strong class="text-[#46A0DD]">STF000</strong></div>
-                    <div>Action Performed By: <strong class="text-[#46A0DD]">Fortune Tech Global</strong></div>
-                    <div>IP Address Used: <strong class="text-[#46A0DD]">102.89.42.0</strong></div>
-                    <div>Computer Used: <strong class="text-[#46A0DD]">wgh9.wghservers.com</strong></div>
+                    <div>User ID: <strong class="text-[#46A0DD]" id="user_id"></strong></div>
+                    <div>Action Performed By: <strong class="text-[#46A0DD]" id="fullname"></strong></div>
+                    <div>IP Address Used: <strong class="text-[#46A0DD]" id="ip_address"></strong></div>
+                    <div>Computer Used: <strong class="text-[#46A0DD]" id="system_used"></strong></div>
                 </div>
 
                 <div class="my-[20px] text-base text-[#B2B7B6] font-bold font-body flex flex-col gap-[5px] w-[100%] bg-[#FAF3F0] border-[#F2BDA2] border-[1px] py-[10px] px-[15px]">
-                    <div>Alert ID: <strong class="text-[#46A0DD]">ALT131</strong></div>
-                    <div>Date: <strong class="text-[#46A0DD]">2022-06-27 04:24:18</strong></div>
+                    <div>Alert ID: <strong class="text-[#46A0DD]" id="alert_id"></strong></div>
+                    <div>Date: <strong class="text-[#46A0DD]" id="date"></strong></div>
                 </div>
 
                 <div class="pl-[10px] mb-[5px] text-primary-color font-bold font-title">Alert Details:</div>
-                <div class="text-base text-[#B2B7B6] font-bold font-body flex flex-col gap-[5px] w-[100%] bg-[#F0F9F4] border-[#A2E8C0] border-[1px] py-[10px] px-[15px]">
-                    Success Alert: A product has been updated under BEVERAGES by MIKE AFOLABI OLUWAGBENGA . Details-- ID: PR062 | NAME: SCOTS HIGHLAND BLENDED SCOTCH WHISKY 75 CL 
-                </div>
+                <div class="text-base text-[#B2B7B6] font-bold font-body flex flex-col gap-[5px] w-[100%] bg-[#F0F9F4] border-[#A2E8C0] border-[1px] py-[10px] px-[15px]" id="alert_description"></div>
                 <button class="w-[40%] mt-[15px]" title="OK" id="submit_btn" onclick="alert_close()"><i class="bi-check2"></i> OK</button>
             </div>
         </div>
+        <script>_get_each_notification('<?php echo $ids; ?>')</script>
     </div>
 <?php }?>
 

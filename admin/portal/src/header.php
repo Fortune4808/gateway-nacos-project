@@ -13,7 +13,7 @@
 
         <div class="flex items-center gap-5">
             <div class="flex py-[8px] px-[15px] hover:bg-white hover:bg-opacity-30 rounded-[5px] cursor-pointer" title="notification" onclick="_get_page('notification')">
-                <i class="bi-bell text-[18px] relative"><span class="absolute top-0 -right-2 bg-[#be1d1d] text-white text-[10px] w-[16px] h-[16px] flex items-center justify-center rounded-full">9+</span></i>
+                <i class="bi-bell text-[18px] relative"><span class="absolute top-0 -right-2 bg-[#be1d1d] text-white text-[10px] w-[16px] h-[16px] flex items-center justify-center rounded-full" id="alert"></span></i>
             </div>
             <div class="w-[40px] h-[40px] rounded-full bg-white fadeInRight animated"><img id="pictureBox2" class="w-[100%] h-[100%] object-cover rounded-full" alt="profile_pix" title="Profile Pix" style="width: 40px; height: 40px; object-position: top;" /></div>
             <button class="text-sm py-[8px] px-[15px] bg-[#C23C41] fadeInRight animated" type="button" title="log-out" id="logout_btn" onclick="_logout_();"><i class="bi-box-arrow-right"></i> Log-Out</button>

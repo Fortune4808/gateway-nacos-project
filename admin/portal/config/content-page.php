@@ -2,7 +2,7 @@
     <div class="w-[98%] flex gap-2 mt-3 flex-wrap content-start">
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_staff">500</div>
+                <div class="text-2xl counter" id="total_staff"></div>
                 <div class="text-sm">TOTAL ADMIN/STAFF</div>
                 <i class="bi-people-fill text-3xl"></i>
             </div>
@@ -10,7 +10,7 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_student">1000</div>
+                <div class="text-2xl counter" id="total_student"></div>
                 <div class="text-sm">TOTAL STUDENT</div>
                 <i class="bi-mortarboard-fill text-3xl"></i>
             </div>
@@ -18,7 +18,7 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_faculty">4000</div>
+                <div class="text-2xl">NGN <span class="counter" id="expected_dept_fee"></span></div>
                 <div class="text-sm">EXPECTED DEPARTMENTAL BALANCE</div>
                 <i class="bi-book-fill text-3xl"></i>
             </div>
@@ -26,7 +26,7 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_department">600,000</div>
+                <div class="text-2xl">NGN <span class="counter" id="department_balance"></span></div>
                 <div class="text-sm">DEPARTMENTAL BALANCE</div>
                 <i class="bi-book-fill text-3xl"></i>
             </div>
@@ -34,7 +34,7 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter" id="total_course">4500</div>
+                <div class="text-2xl">NGN <span class="counter" id="expected_nacos_balance"></span></div>
                 <div class="text-sm">EXPECTED NACOS BALANCE</div>
                 <i class="bi-book-fill text-3xl"></i>
             </div>
@@ -42,7 +42,7 @@
 				
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter">5000</div>
+                <div class="text-2xl">NGN <span class="counter" id="nacos_balance"></span></div>
                 <div class="text-sm">NACOS BALANCE</div>
                 <i class="bi-wallet-fill text-3xl"></i>
             </div>
@@ -50,7 +50,7 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter">2000</div>
+                <div class="text-2xl">NGN <span class="counter" id="total_balance"></span></div>
                 <div class="text-sm">TOTAL BALANCE</div>
                 <i class="bi-wallet-fill text-3xl"></i>
             </div>
@@ -58,7 +58,7 @@
 
         <div class="count-div">
             <div class="w-[90%] m-5 font-bold">
-                <div class="text-2xl counter">12000</div>
+                <div class="text-2xl">NGN <span class="counter" id="total_spent"></span></div>
                 <div class="text-sm">TOTAL AMOUNT SPENT</div>
                 <i class="bi-wallet-fill text-3xl"></i>
             </div>
@@ -165,30 +165,19 @@
 
 <?php if ($page=='notification'){?>
     <div class="w-[100%] h-[55px] text-white bg-[#EBEBEB] rounded-md font-body">
-        <div class="w-[95%] mx-[auto]">
-            <input class="w-[100%] h-[40px] mt-[7.5px] outline-none px-[10px] text-black/50 rounded-md focus:border border-black/30" type="text" id="search"/>
+        <div class="w-[95%] h-[55px] m-auto flex justify-between items-center content-center gap-[5px] text-[10px] text-[#ABABAB]">
+            <input class="w-[20%] h-[45px] bg-white pl-[20px] rounded-[5px] outline-none focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" type="date" id="start_date" title=""/>
+            <input class="w-[20%] h-[45px] bg-white pl-[20px] rounded-[5px] outline-none focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" type="date" id="end-date" title=""/>
+            <button class="text-sm py-[8px] px-[15px]" title="submit" id="submit_btn" onclick="_all_notification($('#start_date').val(), $('#end-date').val())"><i class="bi-check2"></i> FETCH</button>
+            <input class="w-[30%] h-[45px] bg-white pl-[20px] rounded-[5px] outline-none focus:border-black border-solid border focus:border-opacity-30 flex flex-grow" type="text" id="search" onkeyup="_all_notification('', '')" placeholder="Type here to search..." title="Type here to search"/>
         </div>
 
-        <div class="pl-[25px] pt-[17px] text-[11px] text-[#A2A2A2]"><i class="bi-graph-up"></i> Showing Notifications for</div>
-        <div class="w-[100%] border-b border-solid border-[#CECDCD] mt-[10px]"></div>
-
-        <div class="bg-[#F4FDF8] text-[#A2A2A2] border-[#A5EAC2] border-[1px] w-[95%] mx-auto mt-[20px] flex gap-1 p-[10px] pl-[30px] text-[12px]">
-            <i class="bi bi-bell text-[#46A0DD]"></i><p>Notifications Between <strong class="text-[#46A0DD]">December 23 2024</strong> - <strong class="text-[#46A0DD]">December 23 2024</strong></p>
+        <div class="bg-[#F4FDF8] text-[#A2A2A2] border-[#A5EAC2] border-[1px] w-[95%] mx-auto mt-[10px] flex gap-1 p-[10px] pl-[30px] text-[12px]">
+            <i class="bi bi-bell text-[#46A0DD]"></i><p>Notifications</p>
         </div>
 
-        <div class="mt-[10px] w-[95%] m-auto flex justify-center gap-[10px] flex-wrap">
-            <div class="w-[30%] h-[110px] bg-white flex rounded-[5px] border-table-box-border border-[1px] cursor-pointer transition-all duration-700 hover:scale-105" onclick="_get_form('notification-module');">
-                <div class="w-[90%] mx-auto mt-[10px] text-[#333]">
-                    <div class="w-[100%] flex justify-between">
-                        <div><i class="bi bi-person-circle"></i> <span>Fortune Opeyemi</span></div>
-                        <div><i class="bi bi-check2-all text-[15px]"></i></div>
-                    </div>
-
-                    <div class="mt-[8px] text-[12px] text-[#A2A2A2]">Success Alert: A Staff whose name is: <span>GEORGE-ADEWOYE ADETAYO</span> with ID: <span>STF001</span> hav...</div>
-                    <div class="mt-[8px] flex justify-end gap-1 text-[10px] text-[#EDA564]"><i class="bi bi-alarm"></i> <span>2022-06-27 04:19:14</span></div>
-                </div>
-            </div>
-
+        <div class="mt-[10px] w-[95%] m-auto flex justify-center gap-[10px] flex-wrap" id="fetch_all_notification">
+            <script>_all_notification('', '');</script>
         </div>
    </div>  
 <?php }?>
@@ -392,31 +381,6 @@
         <button class="w-[15%] float-right mt-[20px]" id="submit_btn" title="" onclick="">UPDATE PROFILE <i class="bi-check2"></i></button>
         <script>_get_student_profile('<?php echo $ids;?>')</script>
     </div>
-
-    <div class="mt-[60px] mb-[100px] shadow-table-box-border hidden log-div" id="payment-history">
-        <table class="w-[100%] border-collapse">
-            <thead>
-                <tr>
-                    <th>SN</th>
-                    <th>DATE</th>
-                    <th>TRANSACTION ID</th>
-                    <th>(#)AMOUNT</th>
-                    <th>STATUS</th>
-                    <th>PAYMENT METHOD</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white">
-                <tr>
-                    <td>1</td>
-                    <td>2023-09-18 01:01:29</td>
-                    <td> CLN202406051207410022345645672</td>
-                    <td>N 26,000.00</td>
-                    <td>PENDING</td>
-                    <td>CREDIT CARD</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 <?php }?>
 
 <?php if($page=='expenses-module'){?>
@@ -433,7 +397,7 @@
         </div>
 
         <div class="w-[98%] m-auto mt-[10px]" id="fetch_all_expenses">
-            <script>fetchExpenses(1, '');</script>
+            <script>fetchExpenses(1);</script>
         </div>
    </div>  
 <?php }?>

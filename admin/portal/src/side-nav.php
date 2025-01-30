@@ -31,6 +31,8 @@
     if (role_id<=1){
         $('#admin-page').hide();
         $('#faculty-department-page').hide();
+    }else if (role_id<=2){
+        $('#faculty-department-page').hide();
     }
 </script>
 
